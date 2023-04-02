@@ -1,7 +1,7 @@
 ﻿using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 
-namespace Terrain.controls
+namespace Terrain.Controls
 {
     public class Shader : IDisposable
     {
@@ -16,8 +16,11 @@ namespace Terrain.controls
             uint frag = Gl.CreateShader(ShaderType.FragmentShader);
 
             string curPath = Directory.GetCurrentDirectory();
-            Gl.ShaderSource(vert, Path.Join(curPath, vertShaderRelativePath));
-            Gl.ShaderSource(frag, Path.Join(curPath, fragShaderRelativePath));
+            var vertSource = File.ReadAllText(Path.Join(curPath, vertShaderRelativePath));
+            var fragSource = File.ReadAllText(Path.Join(curPath, fragShaderRelativePath));
+
+            Gl.ShaderSource(vert, vertSource);
+            Gl.ShaderSource(frag, fragSource);
 
             Gl.CompileShader(vert);
             Gl.CompileShader(frag);
@@ -29,7 +32,8 @@ namespace Terrain.controls
             Gl.GetShader(vert, ShaderParameterName.CompileStatus, out int vertStatus);
             Gl.GetShader(frag, ShaderParameterName.CompileStatus, out int fragStatus);
             Gl.GetProgram(Handle, ProgramPropertyARB.LinkStatus, out int progStatus);
-            if (vertStatus + fragStatus + progStatus > 0)
+
+            if (vertStatus + fragStatus + progStatus < 3)
             {
                 Console.WriteLine($"Vertex Shader Log:\n" +
                                   $"{Gl.GetShaderInfoLog(vert)}\n\n" +
@@ -46,9 +50,17 @@ namespace Terrain.controls
             Gl.DeleteShader(frag);
         }
         public void Use() => Gl.UseProgram(Handle);
-        public unsafe void setUniform(uint value, string uniformName, bool transpose = false)
+        public unsafe void setUniform(uint value, string uniformName)
+        {
+            Gl.Uniform1(getUniformLocation(uniformName), (int)value);
+        }
+        public unsafe void setUniform(float value, string uniformName)
         {
             Gl.Uniform1(getUniformLocation(uniformName), value);
+        }
+        public unsafe void setUniform(Vector3D<float> value, string uniformName)
+        {
+            Gl.Uniform3(getUniformLocation(uniformName), value.ToSystem());
         }
         public unsafe void setUniform(Matrix4X4<float> matrix, string uniformName, bool transpose = false)
         {
