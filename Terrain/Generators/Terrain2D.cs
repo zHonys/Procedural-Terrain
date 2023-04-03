@@ -28,9 +28,9 @@ namespace Terrain.Generators
             Noise = perlinTexture;
 
             SetUp();
-            int n = 20;
-            Model = Matrix4X4.CreateScale<float>(n, n, 1);
-            Model *= Matrix4X4.CreateTranslation(new Vector3D<float>(-n/2, -n/2, 0));
+            Vector2D<float> scale = new Vector2D<float>(Noise.width, Noise.height)/(64*4);
+            Model = Matrix4X4.CreateScale(scale.X, scale.Y, 1);
+
         }
         public unsafe void Draw(Controls.Shader shader)
         {

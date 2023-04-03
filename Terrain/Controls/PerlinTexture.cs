@@ -11,7 +11,7 @@ namespace Terrain.Controls
         Texture2D texture;
 
         PerlinNoise _noise;
-        readonly uint width, height;
+        public readonly uint width, height;
         byte[,] bytes;
         public byte[,] Bytes { get { return bytes; } }
 
