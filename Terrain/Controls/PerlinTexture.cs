@@ -39,7 +39,7 @@ namespace Terrain.Controls
             }
 
             _GL.GenerateMipmap(TextureTarget.Texture2D);
-            texture = new(_GL, texHandle, "Noise");
+            texture = new(_GL, texHandle, "Perlin");
 
             _GL.TexParameter(GLEnum.Texture2D, TextureParameterName.TextureWrapS, (int)GLEnum.ClampToEdge);
             _GL.TexParameter(GLEnum.Texture2D, TextureParameterName.TextureWrapT, (int)GLEnum.ClampToEdge);

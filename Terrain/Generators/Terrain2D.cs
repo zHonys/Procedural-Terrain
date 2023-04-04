@@ -37,7 +37,7 @@ namespace Terrain.Generators
             _GL.BindVertexArray(VAO);
 
             Noise.Texture.setTexture(shader);
-            shader.setUniform(Model, "Model");
+            shader.SetUniform(Model, "Model");
             SetColors(shader);
 
             _GL.DrawElements(GLEnum.Triangles, (uint)indices.Length, DrawElementsType.UnsignedInt, null);
@@ -76,8 +76,8 @@ namespace Terrain.Generators
         {
             for (int i = 0; i < heightMap.Count; i++)
             {
-                shader.setUniform(heightMap[i].Height, $"heightColors[{i}].height");
-                shader.setUniform(heightMap[i].Color , $"heightColors[{i}].color");
+                shader.SetUniform(heightMap[i].Height, $"heightColors[{i}].height");
+                shader.SetUniform(heightMap[i].Color , $"heightColors[{i}].color");
             }
         }
         #region Basic Square

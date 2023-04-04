@@ -18,7 +18,6 @@ namespace Terrain.Controls
             string curPath = Directory.GetCurrentDirectory();
             var vertSource = File.ReadAllText(Path.Join(curPath, vertShaderRelativePath));
             var fragSource = File.ReadAllText(Path.Join(curPath, fragShaderRelativePath));
-
             Gl.ShaderSource(vert, vertSource);
             Gl.ShaderSource(frag, fragSource);
 
@@ -50,23 +49,23 @@ namespace Terrain.Controls
             Gl.DeleteShader(frag);
         }
         public void Use() => Gl.UseProgram(Handle);
-        public unsafe void setUniform(uint value, string uniformName)
+        public unsafe void SetUniform(uint value, string uniformName)
         {
-            Gl.Uniform1(getUniformLocation(uniformName), (int)value);
+            Gl.Uniform1(GetUniformLocation(uniformName), (int)value);
         }
-        public unsafe void setUniform(float value, string uniformName)
+        public unsafe void SetUniform(float value, string uniformName)
         {
-            Gl.Uniform1(getUniformLocation(uniformName), value);
+            Gl.Uniform1(GetUniformLocation(uniformName), value);
         }
-        public unsafe void setUniform(Vector3D<float> value, string uniformName)
+        public unsafe void SetUniform(Vector3D<float> value, string uniformName)
         {
-            Gl.Uniform3(getUniformLocation(uniformName), value.ToSystem());
+            Gl.Uniform3(GetUniformLocation(uniformName), value.ToSystem());
         }
-        public unsafe void setUniform(Matrix4X4<float> matrix, string uniformName, bool transpose = false)
+        public unsafe void SetUniform(Matrix4X4<float> matrix, string uniformName, bool transpose = false)
         {
-            Gl.UniformMatrix4(getUniformLocation(uniformName), 1, transpose, (float*)&matrix);
+            Gl.UniformMatrix4(GetUniformLocation(uniformName), 1, transpose, (float*)&matrix);
         }
-        public int getUniformLocation(string uniformName) => Gl.GetUniformLocation(Handle, uniformName);
+        public int GetUniformLocation(string uniformName) => Gl.GetUniformLocation(Handle, uniformName);
 
         #region
         private bool disposed = false;
@@ -82,7 +81,7 @@ namespace Terrain.Controls
         private void Dispose(bool disposing)
         {
             if (disposed) return;
-            if (!disposed)
+            if (!disposing)
             {
                 // Good practice
             }

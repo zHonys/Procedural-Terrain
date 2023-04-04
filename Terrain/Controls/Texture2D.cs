@@ -15,7 +15,7 @@ public class Texture2D : IDisposable
     {
         _GL.ActiveTexture((GLEnum)textureUnit);
         _GL.BindTexture(TextureTarget.Texture2D, Handle);
-        shader.setUniform(textureUnit - 33984, UniformName);
+        shader.SetUniform(textureUnit - 33984, UniformName);
     }
     static public void setTextures(IEnumerable<Texture2D> textures, Terrain.Controls.Shader shader)
     {
